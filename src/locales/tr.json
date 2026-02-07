@@ -63,6 +63,35 @@
     "delete": "Sil",
     "edit": "Düzenle",
     "confirm": "Onayla",
-    "noData": "Veri yok"
+    "noData": "Veri yok",
+    "select": "Seçiniz",
+    "placeholder": {
+      "amount": "0,00",
+      "description": "Açıklama girin"
+    }
+  },
+  "categories": {
+    "income": {
+      "salary": "Maaş",
+      "freelance": "Freelance",
+      "investment": "Yatırım",
+      "gift": "Hediye",
+      "other": "Diğer"
+    },
+    "expense": {
+      "food": "Yiyecek",
+      "transport": "Ulaşım",
+      "shopping": "Alışveriş",
+      "bills": "Faturalar",
+      "entertainment": "Eğlence",
+      "healthcare": "Sağlık",
+      "other": "Diğer"
+    },
+    "debt": {
+      "loan": "Kredi",
+      "credit_card": "Kredi Kartı",
+      "friend": "Arkadaş",
+      "other": "Diğer"
+    }
   }
 }

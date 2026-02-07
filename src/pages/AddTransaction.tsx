@@ -4,10 +4,10 @@ import { useTranslation } from 'react-i18next';
 import { db } from '../services/database';
 import { TransactionType } from '../types';
 
-const categories = {
-  income: ['Salary', 'Freelance', 'Investment', 'Gift', 'Other'],
-  expense: ['Food', 'Transport', 'Shopping', 'Bills', 'Entertainment', 'Healthcare', 'Other'],
-  debt: ['Loan', 'Credit Card', 'Friend', 'Other']
+const categoryKeys = {
+  income: ['salary', 'freelance', 'investment', 'gift', 'other'] as const,
+  expense: ['food', 'transport', 'shopping', 'bills', 'entertainment', 'healthcare', 'other'] as const,
+  debt: ['loan', 'credit_card', 'friend', 'other'] as const
 };
 
 export default function AddTransaction() {
@@ -40,7 +40,7 @@ export default function AddTransaction() {
     navigate('/');
   };
 
-  const currentCategories = categories[formData.type];
+  const currentCategoryKeys = categoryKeys[formData.type];
 
   return (
     <div className="space-y-6">
@@ -51,14 +51,14 @@ export default function AddTransaction() {
           <button
             key={type}
             onClick={() => handleTypeChange(type)}
-            className={`flex-1 py-2 px-4 rounded-lg font-medium transition-colors ${
+            className={`flex-1 py-2.5 px-4 rounded-xl font-semibold text-sm transition-all duration-200 ${
               formData.type === type
                 ? type === 'income' 
-                  ? 'bg-green-600 text-white' 
+                  ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/25' 
                   : type === 'expense' 
-                    ? 'bg-red-600 text-white' 
-                    : 'bg-yellow-600 text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                    ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25' 
+                    : 'bg-amber-500 text-white shadow-lg shadow-amber-500/25'
+                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >
             {t(`transaction.${type}`)}
@@ -68,7 +68,7 @@ export default function AddTransaction() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
             {t('transaction.amount')}
           </label>
           <input
@@ -77,13 +77,13 @@ export default function AddTransaction() {
             value={formData.amount}
             onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
             className="input"
-            placeholder="0.00"
+            placeholder={t('common.placeholder.amount')}
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
             {t('transaction.description')}
           </label>
           <input
@@ -91,13 +91,13 @@ export default function AddTransaction() {
             value={formData.description}
             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
             className="input"
-            placeholder="Enter description"
+            placeholder={t('common.placeholder.description')}
             required
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
             {t('transaction.category')}
           </label>
           <select
@@ -106,15 +106,17 @@ export default function AddTransaction() {
             className="input"
             required
           >
-            <option value="">Select category</option>
-            {currentCategories.map((cat) => (
-              <option key={cat} value={cat}>{cat}</option>
+            <option value="">{t('common.select')}</option>
+            {currentCategoryKeys.map((cat) => (
+              <option key={cat} value={cat}>
+                {t(`categories.${formData.type}.${cat}`)}
+              </option>
             ))}
           </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
             {t('transaction.date')}
           </label>
           <input

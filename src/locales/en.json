@@ -63,6 +63,35 @@
     "delete": "Delete",
     "edit": "Edit",
     "confirm": "Confirm",
-    "noData": "No data available"
+    "noData": "No data available",
+    "select": "Select",
+    "placeholder": {
+      "amount": "0.00",
+      "description": "Enter description"
+    }
+  },
+  "categories": {
+    "income": {
+      "salary": "Salary",
+      "freelance": "Freelance",
+      "investment": "Investment",
+      "gift": "Gift",
+      "other": "Other"
+    },
+    "expense": {
+      "food": "Food",
+      "transport": "Transport",
+      "shopping": "Shopping",
+      "bills": "Bills",
+      "entertainment": "Entertainment",
+      "healthcare": "Healthcare",
+      "other": "Other"
+    },
+    "debt": {
+      "loan": "Loan",
+      "credit_card": "Credit Card",
+      "friend": "Friend",
+      "other": "Other"
+    }
   }
 }
