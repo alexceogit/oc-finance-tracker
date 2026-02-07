@@ -1,0 +1,68 @@
+{
+  "app": {
+    "title": "Finance Tracker"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "addTransaction": "Add Transaction",
+    "debts": "Debts",
+    "goals": "Goals",
+    "settings": "Settings"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "balance": "Balance",
+    "income": "Income",
+    "expenses": "Expenses",
+    "upcomingPayments": "Upcoming Payments",
+    "recentTransactions": "Recent Transactions",
+    "noTransactions": "No transactions yet"
+  },
+  "transaction": {
+    "title": "Add Transaction",
+    "type": "Type",
+    "income": "Income",
+    "expense": "Expense",
+    "debt": "Debt",
+    "amount": "Amount",
+    "description": "Description",
+    "category": "Category",
+    "date": "Date",
+    "save": "Save Transaction",
+    "success": "Transaction saved successfully"
+  },
+  "debts": {
+    "title": "Debts",
+    "addDebt": "Add Debt",
+    "lender": "Lender",
+    "borrower": "Borrower",
+    "totalDebt": "Total Debt",
+    "totalReceivable": " "Total Receivable",
+    "noDebts": "No debts yet"
+  },
+  "goals": {
+    "title": "Goals",
+    "addGoal": "Add Goal",
+    "target": "Target Amount",
+    "current": "Current Amount",
+    "progress": "Progress",
+    "noGoals": "No savings goals yet"
+  },
+  "settings": {
+    "title": "Settings",
+    "language": "Language",
+    "currency": "Currency",
+    "theme": "Theme",
+    "dark": "Dark",
+    "light": "Light",
+    "system": "System",
+    "save": "Save Settings"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "confirm": "Confirm",
+    "noData": "No data available"
+  }
+}

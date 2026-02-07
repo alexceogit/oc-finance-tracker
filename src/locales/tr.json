@@ -1,0 +1,68 @@
+{
+  "app": {
+    "title": "Finans Takipçisi"
+  },
+  "nav": {
+    "dashboard": "Ana Sayfa",
+    "addTransaction": "İşlem Ekle",
+    "debts": "Borçlar",
+    "goals": "Hedefler",
+    "settings": "Ayarlar"
+  },
+  "dashboard": {
+    "title": "Ana Sayfa",
+    "balance": "Bakiye",
+    "income": "Gelir",
+    "expenses": "Giderler",
+    "upcomingPayments": "Yaklaşan Ödemeler",
+    "recentTransactions": "Son İşlemler",
+    "noTransactions": "Henüz işlem yok"
+  },
+  "transaction": {
+    "title": "İşlem Ekle",
+    "type": "Tür",
+    "income": "Gelir",
+    "expense": "Gider",
+    "debt": "Borç",
+    "amount": "Tutar",
+    "description": "Açıklama",
+    "category": "Kategori",
+    "date": "Tarih",
+    "save": "İşlem Kaydet",
+    "success": "İşlem başarıyla kaydedildi"
+  },
+  "debts": {
+    "title": "Borçlar",
+    "addDebt": "Borç Ekle",
+    "lender": "Alacaklı",
+    "borrower": "Borçlu",
+    "totalDebt": "Toplam Borç",
+    "totalReceivable": "Toplam Alacak",
+    "noDebts": "Henüz borç yok"
+  },
+  "goals": {
+    "title": "Hedefler",
+    "addGoal": "Hedef Ekle",
+    "target": "Hedef Tutar",
+    "current": "Mevcut Tutar",
+    "progress": "İlerleme",
+    "noGoals": "Henüz tasarruf hedefi yok"
+  },
+  "settings": {
+    "title": "Ayarlar",
+    "language": "Dil",
+    "currency": "Para Birimi",
+    "theme": "Tema",
+    "dark": "Koyu",
+    "light": "Açık",
+    "system": "Sistem",
+    "save": "Ayarları Kaydet"
+  },
+  "common": {
+    "cancel": "İptal",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "confirm": "Onayla",
+    "noData": "Veri yok"
+  }
+}
