@@ -37,7 +37,7 @@
     "lender": "Lender",
     "borrower": "Borrower",
     "totalDebt": "Total Debt",
-    "totalReceivable": " "Total Receivable",
+    "totalReceivable": "Total Receivable",
     "noDebts": "No debts yet"
   },
   "goals": {
