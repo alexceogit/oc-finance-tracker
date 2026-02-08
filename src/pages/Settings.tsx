@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { db } from '../services/database';
-import { Transaction, Debt, Goal } from '../types';
 
 const currencies = [
   { code: 'TRY', symbol: '₺', nameEn: 'Turkish Lira', nameTr: 'Türk Lirası' },
@@ -77,14 +76,16 @@ export default function Settings() {
 
   const exportData = async () => {
     try {
-      const transactions = await db.transactions.toArray();
+      const incomes = await db.incomes.toArray();
+      const expenses = await db.expenses.toArray();
       const debts = await db.debts.toArray();
       const goals = await db.goals.toArray();
 
       const data = {
-        version: 1,
+        version: 3,
         exportDate: new Date().toISOString(),
-        transactions,
+        incomes,
+        expenses,
         debts,
         goals
       };
@@ -120,9 +121,50 @@ export default function Settings() {
       const text = await importFile.text();
       const data = JSON.parse(text);
 
+      // Handle new format (v3)
+      if (data.incomes && Array.isArray(data.incomes)) {
+        await db.incomes.clear();
+        await db.incomes.bulkAdd(data.incomes);
+      }
+      if (data.expenses && Array.isArray(data.expenses)) {
+        await db.expenses.clear();
+        await db.expenses.bulkAdd(data.expenses);
+      }
+      // Handle old format (v1-v2)
       if (data.transactions && Array.isArray(data.transactions)) {
-        await db.transactions.clear();
-        await db.transactions.bulkAdd(data.transactions);
+        // Migrate transactions to incomes/expenses
+        const incomes: any[] = [];
+        const expenses: any[] = [];
+        const now = new Date();
+        
+        data.transactions.forEach((t: any) => {
+          if (t.type === 'income') {
+            incomes.push({
+              type: 'salary',
+              amount: t.amount,
+              expectedDate: t.date ? new Date(t.date).toISOString().split('T')[0] : now.toISOString().split('T')[0],
+              received: true,
+              receivedDate: t.date ? new Date(t.date).toISOString().split('T')[0] : now.toISOString().split('T')[0],
+              month: now.getMonth() + 1,
+              year: now.getFullYear(),
+              createdAt: new Date(t.createdAt)
+            });
+          } else {
+            expenses.push({
+              category: 'other',
+              amount: t.amount,
+              dueDate: t.date ? new Date(t.date).toISOString().split('T')[0] : now.toISOString().split('T')[0],
+              paid: true,
+              paidDate: t.date ? new Date(t.date).toISOString().split('T')[0] : now.toISOString().split('T')[0],
+              month: now.getMonth() + 1,
+              year: now.getFullYear(),
+              createdAt: new Date(t.createdAt)
+            });
+          }
+        });
+
+        if (incomes.length > 0) await db.incomes.bulkAdd(incomes);
+        if (expenses.length > 0) await db.expenses.bulkAdd(expenses);
       }
       if (data.debts && Array.isArray(data.debts)) {
         await db.debts.clear();
@@ -143,7 +185,8 @@ export default function Settings() {
 
   const clearAllData = async () => {
     try {
-      await db.transactions.clear();
+      await db.incomes.clear();
+      await db.expenses.clear();
       await db.debts.clear();
       await db.goals.clear();
       setShowClearConfirm(false);

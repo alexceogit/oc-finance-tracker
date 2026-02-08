@@ -1,7 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Dashboard from './pages/Dashboard';
-import AddTransaction from './pages/AddTransaction';
+import Income from './pages/Income';
+import Expense from './pages/Expense';
 import Debts from './pages/Debts';
 import Goals from './pages/Goals';
 import Settings from './pages/Settings';
@@ -23,11 +24,20 @@ function Navigation() {
       )
     },
     { 
-      path: '/add', 
-      label: t('nav.addTransaction'), 
+      path: '/income', 
+      label: t('nav.income'), 
       icon: (
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
+        </svg>
+      )
+    },
+    { 
+      path: '/expense', 
+      label: t('nav.expense'), 
+      icon: (
+        <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 13l-5 5m0 0l-5-5m5 5V6" />
         </svg>
       )
     },
@@ -101,7 +111,8 @@ function App() {
         <main className="max-w-md mx-auto px-4 py-6 pb-28">
           <Routes>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/add" element={<AddTransaction />} />
+            <Route path="/income" element={<Income />} />
+            <Route path="/expense" element={<Expense />} />
             <Route path="/debts" element={<Debts />} />
             <Route path="/goals" element={<Goals />} />
             <Route path="/settings" element={<Settings />} />
