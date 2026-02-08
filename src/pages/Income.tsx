@@ -148,25 +148,10 @@ export default function Income() {
           </div>
           {formData.received && (
             <span className="text-sm text-emerald-600 font-medium">
-              {t('income.received')}: {new Date(formData.receivedDate || new Date().toISOString().split('T')[0]).toLocaleDateString()}
+              {formData.receivedDate || new Date().toISOString().split('T')[0]}
             </span>
           )}
         </div>
-
-        {/* Received Date (auto-filled when received is true) */}
-        {formData.received && (
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1.5">
-              {t('income.receivedDate')}
-            </label>
-            <input
-              type="date"
-              value={formData.receivedDate}
-              onChange={(e) => setFormData({ ...formData, receivedDate: e.target.value })}
-              className="input"
-            />
-          </div>
-        )}
 
         {/* Month/Year Display */}
         <div className="flex gap-4 py-2">

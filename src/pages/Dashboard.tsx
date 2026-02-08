@@ -164,7 +164,24 @@ export default function Dashboard() {
                     <p className="text-xs text-gray-500">{income.expectedDate}</p>
                   </div>
                 </div>
-                <p className="text-sm font-semibold text-amber-600">{formatCurrency(income.amount)}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-semibold text-amber-600">{formatCurrency(income.amount)}</p>
+                  <button
+                    onClick={async () => {
+                      await db.incomes.update(income.id!, { 
+                        received: true, 
+                        receivedDate: new Date().toISOString().split('T')[0] 
+                      });
+                      loadData();
+                    }}
+                    className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center hover:bg-emerald-200 transition-colors"
+                    title={t('income.received')}
+                  >
+                    <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -191,7 +208,24 @@ export default function Dashboard() {
                     <p className="text-xs text-gray-500">{expense.dueDate}</p>
                   </div>
                 </div>
-                <p className="text-sm font-semibold text-amber-600">{formatCurrency(expense.amount)}</p>
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-semibold text-amber-600">{formatCurrency(expense.amount)}</p>
+                  <button
+                    onClick={async () => {
+                      await db.expenses.update(expense.id!, { 
+                        paid: true, 
+                        paidDate: new Date().toISOString().split('T')[0] 
+                      });
+                      loadData();
+                    }}
+                    className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center hover:bg-emerald-200 transition-colors"
+                    title={t('expense.paid')}
+                  >
+                    <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </button>
+                </div>
               </div>
             ))}
           </div>
