@@ -6,8 +6,7 @@ import { TransactionType } from '../types';
 
 const categoryKeys = {
   income: ['salary', 'freelance', 'investment', 'gift', 'other'] as const,
-  expense: ['food', 'transport', 'shopping', 'bills', 'entertainment', 'healthcare', 'other'] as const,
-  debt: ['loan', 'credit_card', 'friend', 'other'] as const
+  expense: ['food', 'transport', 'shopping', 'bills', 'entertainment', 'healthcare', 'other'] as const
 };
 
 export default function AddTransaction() {
@@ -47,7 +46,7 @@ export default function AddTransaction() {
       <h2 className="text-2xl font-bold text-gray-800">{t('transaction.title')}</h2>
       
       <div className="flex gap-2 mb-4">
-        {(['income', 'expense', 'debt'] as TransactionType[]).map((type) => (
+        {(['income', 'expense'] as TransactionType[]).map((type) => (
           <button
             key={type}
             onClick={() => handleTypeChange(type)}
@@ -55,9 +54,7 @@ export default function AddTransaction() {
               formData.type === type
                 ? type === 'income' 
                   ? 'bg-emerald-500 text-white shadow-lg shadow-emerald-500/25' 
-                  : type === 'expense' 
-                    ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25' 
-                    : 'bg-amber-500 text-white shadow-lg shadow-amber-500/25'
+                  : 'bg-rose-500 text-white shadow-lg shadow-rose-500/25'
                 : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
             }`}
           >

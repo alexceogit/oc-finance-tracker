@@ -76,8 +76,8 @@
   "goals": {
     "title": "Hedefler",
     "addGoal": "Hedef Ekle",
-    "name": "Hedef Adı",
-    "namePlaceholder": "Örn: Yeni Telefon",
+    "goalName": "Hedef Adı",
+    "goalNamePlaceholder": "Örn: Yeni Telefon",
     "target": "Hedef Tutar",
     "current": "Mevcut Tutar",
     "progress": "İlerleme",
@@ -95,6 +95,19 @@
     "deadlinePassed": "Vade geçti",
     "deadlineToday": "Bugün son",
     "deadlineDays": "{{count}} gün kaldı"
+  },
+  "goalCategories": {
+    "Emergency Fund": "Acil Durum Fonu",
+    "Vacation": "Tatil",
+    "Car": "Araba",
+    "Home": "Ev",
+    "Education": "Eğitim",
+    "Debt Payoff": "Borç Ödeme",
+    "Investment": "Yatırım",
+    "Wedding": "Düğün",
+    "Electronics": "Elektronik",
+    "Retirement": "Emeklilik",
+    "Other": "Diğer"
   },
   "settings": {
     "title": "Ayarlar",

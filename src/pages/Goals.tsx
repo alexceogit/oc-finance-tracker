@@ -35,6 +35,11 @@ export default function Goals() {
     'Debt Payoff', 'Investment', 'Wedding', 'Electronics', 'Retirement', 'Other'
   ];
 
+  // Helper to get translated category name
+  const getTranslatedCategory = (category: string) => {
+    return t(`goalCategories.${category}`) || category;
+  };
+
   useEffect(() => {
     loadGoals();
   }, []);
@@ -155,7 +160,7 @@ export default function Goals() {
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="input"
-                placeholder={t('goals.goalNamePlaceholder') || 'e.g., New Car'}
+                placeholder={t('goals.goalNamePlaceholder')}
                 required
               />
             </div>
@@ -202,7 +207,7 @@ export default function Goals() {
               >
                 {goalCategories.map((cat) => (
                   <option key={cat} value={cat}>
-                    {goalIcons[cat] || '🎯'} {cat}
+                    {goalIcons[cat] || '🎯'} {getTranslatedCategory(cat)}
                   </option>
                 ))}
               </select>
@@ -291,7 +296,7 @@ export default function Goals() {
                       </div>
                       <div>
                         <h3 className="font-semibold text-lg text-gray-900">{goal.name}</h3>
-                        <p className="text-sm text-gray-500">{goal.category}</p>
+                        <p className="text-sm text-gray-500">{getTranslatedCategory(goal.category)}</p>
                       </div>
                     </div>
                     

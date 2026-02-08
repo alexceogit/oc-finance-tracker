@@ -76,8 +76,8 @@
   "goals": {
     "title": "Goals",
     "addGoal": "Add Goal",
-    "name": "Goal Name",
-    "namePlaceholder": "e.g., New Phone",
+    "goalName": "Goal Name",
+    "goalNamePlaceholder": "e.g., New Phone",
     "target": "Target Amount",
     "current": "Current Amount",
     "progress": "Progress",
@@ -95,6 +95,19 @@
     "deadlinePassed": "Deadline passed",
     "deadlineToday": "Due today",
     "deadlineDays": "{{count}} days left"
+  },
+  "goalCategories": {
+    "Emergency Fund": "Emergency Fund",
+    "Vacation": "Vacation",
+    "Car": "Car",
+    "Home": "Home",
+    "Education": "Education",
+    "Debt Payoff": "Debt Payoff",
+    "Investment": "Investment",
+    "Wedding": "Wedding",
+    "Electronics": "Electronics",
+    "Retirement": "Retirement",
+    "Other": "Other"
   },
   "settings": {
     "title": "Settings",
