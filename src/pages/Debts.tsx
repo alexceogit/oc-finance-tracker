@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { db, Debt } from '../services/database';
 
-export default function Debts() {
+function Debts() {
   const { t, i18n } = useTranslation();
   const [debts, setDebts] = useState<Debt[]>([]);
   const [showForm, setShowForm] = useState(false);
