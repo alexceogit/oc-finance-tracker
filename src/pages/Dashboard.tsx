@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { db, Income, Expense, Debt } from '../services/database';
+import Tour, { shouldShowTour } from '../components/Tour';
 
 export default function Dashboard() {
   const { t, i18n } = useTranslation();
@@ -19,9 +20,13 @@ export default function Dashboard() {
     totalDebt: 0,
     totalReceivable: 0
   });
+  const [showTour, setShowTour] = useState(false);
 
   useEffect(() => {
     loadData();
+    if (shouldShowTour()) {
+      setShowTour(true);
+    }
   }, []);
 
   async function loadData() {
@@ -88,7 +93,7 @@ export default function Dashboard() {
   return (
     <div className="space-y-6 pb-24">
       {/* Budget Overview Card */}
-      <div className="balance-card animate-fade-in">
+      <div className="balance-card animate-fade-in" data-tour="net-balance">
         <div className="flex items-center justify-between mb-4">
           <div>
             <p className="balance-card-label">{t('dashboard.netBalance')}</p>
@@ -121,7 +126,7 @@ export default function Dashboard() {
 
       {/* Debt Summary */}
       {(stats.totalDebt > 0 || stats.totalReceivable > 0) && (
-        <div className="card animate-slide-up" style={{ animationDelay: '0.05s' }}>
+        <div className="card animate-slide-up" style={{ animationDelay: '0.05s' }} data-tour="debts-section">
           <div className="flex items-center justify-between mb-3">
             <h3 className="section-title mb-0">{t('debts.title')}</h3>
             <Link to="/debts" className="text-sm text-indigo-600 hover:text-indigo-700">
@@ -162,7 +167,7 @@ export default function Dashboard() {
 
       {/* Quick Actions */}
       <div className="grid grid-cols-2 gap-4 animate-slide-up" style={{ animationDelay: '0.15s' }}>
-        <Link to="/income" className="card flex items-center gap-3 hover:border-emerald-300 transition-all">
+        <Link to="/income" className="card flex items-center gap-3 hover:border-emerald-300 transition-all" data-tour="income-button">
           <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
             <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 11l5-5m0 0l5 5m-5-5v12" />
@@ -174,7 +179,7 @@ export default function Dashboard() {
           </div>
         </Link>
 
-        <Link to="/expense" className="card flex items-center gap-3 hover:border-rose-300 transition-all">
+        <Link to="/expense" className="card flex items-center gap-3 hover:border-rose-300 transition-all" data-tour="expense-button">
           <div className="w-10 h-10 bg-rose-50 rounded-xl flex items-center justify-center">
             <svg className="w-5 h-5 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 13l-5 5m0 0l-5-5m5 5V6" />
@@ -326,6 +331,9 @@ export default function Dashboard() {
           </div>
         </div>
       )}
+
+      {/* Tour Component */}
+      {showTour && <Tour onComplete={() => setShowTour(false)} />}
     </div>
   );
 }

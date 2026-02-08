@@ -215,7 +215,21 @@
     "version": "Version",
     "pwa": "PWA Support",
     "supported": "Supported",
-    "copyright": "© 2024 Finance Tracker PWA"
+    "copyright": "© 2024 Finance Tracker PWA",
+    "showTour": "Show Tour",
+    "showTourDesc": "Restart the onboarding tour",
+    "tourResetSuccess": "Tour reset! Reload to see it again."
+  },
+  "tour": {
+    "stepOf": "Step {{current}} of {{total}}",
+    "next": "Next",
+    "done": "Done",
+    "skip": "Skip",
+    "netBalance": "Net Balance: Your income minus expenses for this month",
+    "addIncome": "Add Income: Record your monthly income here",
+    "addExpense": "Add Expense: Track your monthly expenses here",
+    "debts": "Debts: Track money you owe and money owed to you",
+    "goals": "Goals: Set savings targets and track your progress"
   },
   "common": {
     "cancel": "Cancel",

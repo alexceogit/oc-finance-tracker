@@ -215,7 +215,21 @@
     "version": "Sürüm",
     "pwa": "PWA Desteği",
     "supported": "Destekleniyor",
-    "copyright": "© 2024 Finans Pusulası PWA"
+    "copyright": "© 2024 Finans Pusulası PWA",
+    "showTour": "Tur Göster",
+    "showTourDesc": "Başlangıç turunu yeniden başlat",
+    "tourResetSuccess": "Tur sıfırlandı! Görmek için sayfayı yenileyin."
+  },
+  "tour": {
+    "stepOf": "{{current}} / {{total}} Adım",
+    "next": "Sonraki",
+    "done": "Tamam",
+    "skip": "Geç",
+    "netBalance": "Net Bakiye: Bu ay kazandığınız ve harcadığınız tutar",
+    "addIncome": "Gelir Ekle: Aylık gelirlerinizi buradan ekleyin",
+    "addExpense": "Gider Ekle: Aylık giderlerinizi buradan ekleyin",
+    "debts": "Borçlar: Borçlarınızı ve alacaklarınızı takip edin",
+    "goals": "Hedefler: Tasarruf hedeflerinizi belirleyin"
   },
   "common": {
     "cancel": "İptal",
