@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface TourStep {
@@ -43,18 +43,32 @@ export default function Tour({ onComplete }: TourProps) {
   const { t } = useTranslation();
   const [currentStep, setCurrentStep] = useState(0);
   const [position, setPosition] = useState<{ top: number; left: number; bottom?: number; right?: number } | null>(null);
+  const [isVisible, setIsVisible] = useState(true);
+  const previousActiveElement = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
+    // Store current active element
+    previousActiveElement.current = document.activeElement as HTMLElement;
+    
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+    
     updatePosition();
     window.addEventListener('resize', updatePosition);
     window.addEventListener('scroll', updatePosition);
+    
     return () => {
+      document.body.style.overflow = '';
       window.removeEventListener('resize', updatePosition);
       window.removeEventListener('scroll', updatePosition);
+      // Restore focus
+      previousActiveElement.current?.focus();
     };
-  }, [currentStep]);
+  }, [currentStep, isVisible]);
 
   function updatePosition() {
+    if (!isVisible) return;
+    
     const targetElement = document.querySelector(`[data-tour="${tourSteps[currentStep].target}"]`);
     if (targetElement) {
       const rect = targetElement.getBoundingClientRect();
@@ -65,32 +79,32 @@ export default function Tour({ onComplete }: TourProps) {
       switch (step.position) {
         case 'bottom':
           newPosition = {
-            top: rect.bottom + 10 + window.scrollY,
-            left: rect.left + (rect.width / 2) - 150
+            top: rect.bottom + 10,
+            left: Math.max(10, rect.left + (rect.width / 2) - 150)
           };
           break;
         case 'top':
           newPosition = {
-            bottom: window.innerHeight - rect.top + 10 + window.scrollY,
-            left: rect.left + (rect.width / 2) - 150
+            bottom: window.innerHeight - rect.top + 10,
+            left: Math.max(10, rect.left + (rect.width / 2) - 150)
           };
           break;
         case 'left':
           newPosition = {
-            top: rect.top + window.scrollY + (rect.height / 2) - 60,
+            top: Math.max(10, rect.top + (rect.height / 2) - 60),
             right: window.innerWidth - rect.left + 10
           };
           break;
         case 'right':
           newPosition = {
-            top: rect.top + window.scrollY + (rect.height / 2) - 60,
+            top: Math.max(10, rect.top + (rect.height / 2) - 60),
             left: rect.right + 10
           };
           break;
         default:
           newPosition = {
-            top: rect.bottom + 10 + window.scrollY,
-            left: rect.left + (rect.width / 2) - 150
+            top: rect.bottom + 10,
+            left: Math.max(10, rect.left + (rect.width / 2) - 150)
           };
       }
       
@@ -98,53 +112,56 @@ export default function Tour({ onComplete }: TourProps) {
     }
   }
 
-  function handleNext() {
+  async function handleNext() {
     if (currentStep < tourSteps.length - 1) {
       setCurrentStep(currentStep + 1);
     } else {
-      handleComplete();
+      await handleComplete();
     }
   }
 
-  function handleComplete() {
+  async function handleComplete() {
+    setIsVisible(false);
     localStorage.setItem('tour_completed', 'true');
-    onComplete();
+    // Small delay to ensure smooth transition
+    setTimeout(() => {
+      onComplete();
+    }, 300);
   }
 
   function handleSkip() {
     handleComplete();
   }
 
+  if (!isVisible) {
+    return null;
+  }
+
   const step = tourSteps[currentStep];
+  const targetElement = document.querySelector(`[data-tour="${step.target}"]`);
+  const hasTarget = !!targetElement;
 
   return (
     <>
       {/* Overlay */}
-      <div className="fixed inset-0 bg-black/50 z-40" />
+      <div className="fixed inset-0 bg-black/50 z-40 animate-fade-in" />
       
       {/* Highlight element */}
-      {(() => {
-        const targetElement = document.querySelector(`[data-tour="${step.target}"]`);
-        if (targetElement) {
-          const rect = targetElement.getBoundingClientRect();
-          return (
-            <div
-              className="fixed z-40 border-2 border-indigo-500 rounded-lg animate-pulse"
-              style={{
-                top: rect.top - 4 + window.scrollY,
-                left: rect.left - 4,
-                width: rect.width + 8,
-                height: rect.height + 8,
-              }}
-            />
-          );
-        }
-        return null;
-      })()}
+      {hasTarget && targetElement && (
+        <div
+          className="fixed z-40 border-2 border-indigo-500 rounded-lg animate-pulse"
+          style={{
+            top: targetElement.getBoundingClientRect().top - 4,
+            left: targetElement.getBoundingClientRect().left - 4,
+            width: targetElement.getBoundingClientRect().width + 8,
+            height: targetElement.getBoundingClientRect().height + 8,
+          }}
+        />
+      )}
 
       {/* Tour tooltip */}
       <div
-        className="fixed z-50 w-[300px] bg-white dark:bg-slate-800 rounded-2xl shadow-2xl animate-fade-in"
+        className="fixed z-50 w-[300px] bg-white dark:bg-slate-800 rounded-2xl shadow-2xl animate-slide-up"
         style={position || { top: 100, left: 50 }}
       >
         <div className="p-4">
@@ -197,9 +214,9 @@ export default function Tour({ onComplete }: TourProps) {
           className="absolute w-4 h-4 bg-white dark:bg-slate-800 rotate-45"
           style={{
             left: '50%',
-            transform: step.position === 'bottom' ? 'translateX(-50%) rotate(45deg) translateY(-50%)' : 'translateX(-50%) rotate(-135deg) translateY(-50%)',
-            top: step.position === 'bottom' ? -2 : 'auto',
-            bottom: step.position === 'top' ? -2 : 'auto',
+            marginLeft: '-8px',
+            top: step.position === 'bottom' ? '-8px' : 'auto',
+            bottom: step.position === 'top' ? '-8px' : 'auto',
           }}
         />
       </div>
