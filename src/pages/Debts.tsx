@@ -12,7 +12,9 @@ export default function Debts() {
     direction: 'borrow' as 'borrow' | 'lend',
     amount: '',
     description: '',
-    dueDate: ''
+    dueDate: '',
+    isInstallment: false,
+    installmentCount: 1
   });
 
   useEffect(() => {
@@ -50,11 +52,13 @@ export default function Debts() {
       description: formData.description,
       dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
       status: 'pending',
+      isInstallment: formData.isInstallment,
+      installmentCount: formData.installmentCount,
       createdAt: new Date()
     });
 
     setShowForm(false);
-    setFormData({ personName: '', direction: 'borrow', amount: '', description: '', dueDate: '' });
+    setFormData({ personName: '', direction: 'borrow', amount: '', description: '', dueDate: '', isInstallment: false, installmentCount: 1 });
     loadDebts();
   };
 
@@ -289,6 +293,56 @@ export default function Debts() {
               />
             </div>
 
+            {/* Installment Option */}
+            <div className="form-group">
+              <button
+                type="button"
+                onClick={() => setFormData({ ...formData, isInstallment: !formData.isInstallment })}
+                className={`w-full p-3 rounded-xl border-2 transition-all duration-200 flex items-center justify-between ${
+                  formData.isInstallment
+                    ? 'border-slate-900 bg-slate-900 text-white'
+                    : 'border-gray-200 bg-white text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+                  </svg>
+                  <span className="font-medium">{t('debts.installment')}</span>
+                </div>
+                <div className={`w-10 h-6 rounded-full transition-all duration-200 ${
+                  formData.isInstallment ? 'bg-white/20' : 'bg-gray-200'
+                }`}>
+                  <div className={`w-4 h-4 rounded-full bg-white transition-all duration-200 mt-1 ${
+                    formData.isInstallment ? 'translate-x-5' : 'translate-x-1'
+                  }`} />
+                </div>
+              </button>
+            </div>
+
+            {/* Installment Count */}
+            {formData.isInstallment && (
+              <div className="form-group animate-slide-up">
+                <label className="form-label">{t('debts.installmentCount')}</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {[1, 2, 3, 6, 9, 12, 18, 24].map((count) => (
+                    <button
+                      key={count}
+                      type="button"
+                      onClick={() => setFormData({ ...formData, installmentCount: count })}
+                      className={`py-2 px-3 rounded-xl text-sm font-medium transition-all duration-200 ${
+                        formData.installmentCount === count
+                          ? 'bg-slate-900 text-white'
+                          : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                      }`}
+                    >
+                      {count}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="flex gap-3 pt-2">
               <button type="submit" className="btn btn-primary flex-1">
                 {t('debts.saveDebt')}
@@ -359,15 +413,23 @@ export default function Debts() {
                     <span className={`debt-amount ${debt.lender ? 'amount-negative' : 'amount-positive'}`}>
                       {debt.lender ? '-' : '+'}{formatCurrency(debt.amount)}
                     </span>
-                    {debt.dueDate && (
-                      <div className="debt-due-date">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    {debt.isInstallment && (
+                      <div className="flex items-center gap-1 text-xs bg-slate-100 text-slate-600 px-2 py-1 rounded-full">
+                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                         </svg>
-                        <span>{t('debts.due')}: {formatDate(debt.dueDate)}</span>
+                        <span>{debt.installmentCount} {t('debts.installments')}</span>
                       </div>
                     )}
                   </div>
+                  {debt.dueDate && (
+                    <div className="debt-due-date mt-1">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span>{t('debts.due')}: {formatDate(debt.dueDate)}</span>
+                    </div>
+                  )}
                 </div>
 
                 {debt.status === 'pending' && (

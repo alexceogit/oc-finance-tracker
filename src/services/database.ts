@@ -2,11 +2,12 @@ import Dexie, { Table } from 'dexie';
 
 export interface Transaction {
   id?: number;
-  type: 'income' | 'expense' | 'debt';
+  type: 'income' | 'expense';
   amount: number;
   description: string;
   category: string;
   date: Date;
+  frequency: 'once' | 'daily' | 'weekly' | 'monthly' | 'yearly';
   createdAt: Date;
 }
 
@@ -18,6 +19,8 @@ export interface Debt {
   description: string;
   dueDate?: Date;
   status: 'pending' | 'paid' | 'overdue';
+  isInstallment: boolean;
+  installmentCount: number;
   createdAt: Date;
 }
 

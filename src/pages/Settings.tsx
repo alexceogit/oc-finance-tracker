@@ -212,11 +212,6 @@ export default function Settings() {
               <span className="font-medium block">English</span>
               <span className="text-xs opacity-70">English</span>
             </div>
-            {language === 'en' && (
-              <svg className="w-5 h-5 text-primary-600 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            )}
           </button>
           
           <button
@@ -228,11 +223,6 @@ export default function Settings() {
               <span className="font-medium block">Türkçe</span>
               <span className="text-xs opacity-70">Turkish</span>
             </div>
-            {language === 'tr' && (
-              <svg className="w-5 h-5 text-primary-600 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            )}
           </button>
         </div>
       </div>
@@ -257,11 +247,6 @@ export default function Settings() {
             >
               <span className="text-2xl font-semibold">{curr.symbol}</span>
               <span className="text-sm ml-2">{curr.code}</span>
-              {currency === curr.code && (
-                <svg className="w-5 h-5 text-primary-600 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              )}
             </button>
           ))}
         </div>
@@ -289,11 +274,6 @@ export default function Settings() {
               <span className="text-sm ml-2">
                 {i18n.language === 'tr' ? themeOption.nameTr : themeOption.nameEn}
               </span>
-              {theme === themeOption.value && (
-                <svg className="w-5 h-5 text-primary-600 ml-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-              )}
             </button>
           ))}
         </div>

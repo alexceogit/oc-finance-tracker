@@ -9,6 +9,14 @@ const categoryKeys = {
   expense: ['food', 'transport', 'shopping', 'bills', 'entertainment', 'healthcare', 'other'] as const
 };
 
+const frequencies = [
+  { value: 'once', label: 'transaction.once' },
+  { value: 'daily', label: 'transaction.daily' },
+  { value: 'weekly', label: 'transaction.weekly' },
+  { value: 'monthly', label: 'transaction.monthly' },
+  { value: 'yearly', label: 'transaction.yearly' }
+] as const;
+
 export default function AddTransaction() {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -17,7 +25,8 @@ export default function AddTransaction() {
     amount: '',
     description: '',
     category: '',
-    date: new Date().toISOString().split('T')[0]
+    date: new Date().toISOString().split('T')[0],
+    frequency: 'once' as 'once' | 'daily' | 'weekly' | 'monthly' | 'yearly'
   });
 
   const handleTypeChange = (type: TransactionType) => {
@@ -33,6 +42,7 @@ export default function AddTransaction() {
       description: formData.description,
       category: formData.category,
       date: new Date(formData.date),
+      frequency: formData.frequency,
       createdAt: new Date()
     });
 
@@ -110,6 +120,29 @@ export default function AddTransaction() {
               </option>
             ))}
           </select>
+        </div>
+
+        {/* Frequency Selection */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('transaction.frequency')}
+          </label>
+          <div className="grid grid-cols-5 gap-2">
+            {frequencies.map((freq) => (
+              <button
+                key={freq.value}
+                type="button"
+                onClick={() => setFormData({ ...formData, frequency: freq.value })}
+                className={`py-2 px-3 rounded-xl text-xs font-medium transition-all duration-200 ${
+                  formData.frequency === freq.value
+                    ? 'bg-slate-900 text-white shadow-lg'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {t(freq.label)}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div>
