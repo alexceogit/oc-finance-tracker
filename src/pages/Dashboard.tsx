@@ -51,12 +51,12 @@ export default function Dashboard() {
 
     // Calculate debt totals (only pending debts)
     const owedToOthers = allDebts
-      .filter(d => d.status === 'pending' && d.direction === 'borrow')
-      .reduce((sum, d) => sum + d.amount, 0);
+      .filter(d => (d.status === 'pending' || d.status === 'partially_paid') && d.direction === 'borrow')
+      .reduce((sum, d) => sum + d.remainingAmount, 0);
     
     const owedByOthers = allDebts
-      .filter(d => d.status === 'pending' && d.direction === 'lend')
-      .reduce((sum, d) => sum + d.amount, 0);
+      .filter(d => (d.status === 'pending' || d.status === 'partially_paid') && d.direction === 'lend')
+      .reduce((sum, d) => sum + d.remainingAmount, 0);
 
     setIncomes(allIncomes.slice(-5).reverse());
     setExpenses(allExpenses.slice(-5).reverse());

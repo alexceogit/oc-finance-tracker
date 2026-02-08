@@ -29,14 +29,22 @@ export interface Debt {
   id?: number;
   personName: string;
   direction: 'borrow' | 'lend';
-  amount: number;
+  originalAmount: number;
+  remainingAmount: number;
   description?: string;
-  dueDate: string;
-  status: 'pending' | 'paid';
-  paidDate?: string;
+  dueDate?: string;
+  status: 'pending' | 'partially_paid' | 'paid';
+  createdAt: Date;
+}
+
+export interface DebtPayment {
+  id?: number;
+  debtId: number;
+  amount: number;
+  paymentDate: string;
+  month: number;
+  year: number;
   note?: string;
-  isInstallment?: boolean;
-  installmentCount?: number;
   createdAt: Date;
 }
 
@@ -55,14 +63,16 @@ class FinanceDatabase extends Dexie {
   incomes!: Table<Income>;
   expenses!: Table<Expense>;
   debts!: Table<Debt>;
+  debtPayments!: Table<DebtPayment>;
   goals!: Table<Goal>;
 
   constructor() {
     super('FinanceTrackerDB');
-    this.version(3).stores({
+    this.version(4).stores({
       incomes: '++id, type, received, month, year, createdAt',
       expenses: '++id, category, paid, month, year, createdAt',
-      debts: '++id, personName, direction, status, dueDate, createdAt',
+      debts: '++id, personName, direction, status, createdAt',
+      debtPayments: '++id, debtId, month, year, createdAt',
       goals: '++id, name, category, deadline, createdAt'
     });
   }
