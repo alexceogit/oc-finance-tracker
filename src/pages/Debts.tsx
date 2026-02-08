@@ -21,6 +21,7 @@ function Debts() {
     isInstallment: false,
     installmentCount: 1
   });
+  const [customInstallment, setCustomInstallment] = useState('');
 
   useEffect(() => {
     loadDebts();
@@ -64,6 +65,7 @@ function Debts() {
 
     setShowForm(false);
     setFormData({ personName: '', direction: 'borrow', amount: '', description: '', dueDate: '', isInstallment: false, installmentCount: 1 });
+    setCustomInstallment('');
     loadDebts();
   };
 
@@ -361,17 +363,21 @@ function Debts() {
                   ))}
                 </div>
                 <input
-                  type="number"
-                  min="2"
-                  max="60"
-                  value={formData.installmentCount > 12 ? formData.installmentCount : ''}
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  value={customInstallment}
                   onChange={(e) => {
-                    const val = parseInt(e.target.value) || 2;
-                    setFormData({ ...formData, installmentCount: Math.max(2, Math.min(60, val)) });
+                    const val = e.target.value.replace(/\D/g, '');
+                    setCustomInstallment(val);
+                    if (val) {
+                      const numVal = Math.max(2, Math.min(60, parseInt(val) || 2));
+                      setFormData({ ...formData, installmentCount: numVal });
+                    }
                   }}
-                  onKeyDown={(e) => {
-                    if (['e', 'E', '+', '-', '.'].includes(e.key)) {
-                      e.preventDefault();
+                  onBlur={(e) => {
+                    if (!customInstallment) {
+                      setFormData({ ...formData, installmentCount: 2 });
                     }
                   }}
                   className="input"
