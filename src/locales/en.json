@@ -16,7 +16,8 @@
     "expenses": "Expenses",
     "upcomingPayments": "Upcoming Payments",
     "recentTransactions": "Recent Transactions",
-    "noTransactions": "No transactions yet"
+    "noTransactions": "No transactions yet",
+    "emptyStateDescription": "Tap the + button below to add your first transaction"
   },
   "transaction": {
     "title": "Add Transaction",

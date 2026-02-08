@@ -118,7 +118,7 @@ export default function Dashboard() {
             </svg>
             <p className="empty-state-title">{t('dashboard.noTransactions')}</p>
             <p className="empty-state-description">
-              İlk işlemini eklemek için aşağıdaki + butonunu kullan
+              {t('dashboard.emptyStateDescription')}
             </p>
           </div>
         ) : (

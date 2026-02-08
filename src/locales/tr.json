@@ -16,7 +16,8 @@
     "expenses": "Giderler",
     "upcomingPayments": "Yaklaşan Ödemeler",
     "recentTransactions": "Son İşlemler",
-    "noTransactions": "Henüz işlem yok"
+    "noTransactions": "Henüz işlem yok",
+    "emptyStateDescription": "İlk işlemini eklemek için aşağıdaki + butonunu kullan"
   },
   "transaction": {
     "title": "İşlem Ekle",

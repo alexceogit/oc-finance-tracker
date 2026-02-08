@@ -52,11 +52,11 @@ body {
   }
 
   .btn-secondary {
-    @apply bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-400;
+    @apply bg-gray-100 text-gray-700 hover:bg-gray-200 focus:ring-gray-400 shadow-sm;
   }
 
   .btn-ghost {
-    @apply bg-transparent text-gray-600 hover:bg-gray-100;
+    @apply bg-transparent text-gray-600 hover:bg-gray-100 shadow-none;
   }
 
   /* Form Inputs */
