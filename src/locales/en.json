@@ -25,7 +25,9 @@
     "received": "Received",
     "pending": "Pending",
     "paid": "Paid",
-    "unpaid": "Unpaid"
+    "unpaid": "Unpaid",
+    "addIncome": "Add Income",
+    "addExpense": "Add Expense"
   },
   "transaction": {
     "title": "Add Transaction",

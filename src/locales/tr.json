@@ -25,7 +25,9 @@
     "received": "Tahsil Edildi",
     "pending": "Bekliyor",
     "paid": "Ödendi",
-    "unpaid": "Ödenmedi"
+    "unpaid": "Ödenmedi",
+    "addIncome": "Gelir Ekle",
+    "addExpense": "Gider Ekle"
   },
   "transaction": {
     "title": "İşlem Ekle",
