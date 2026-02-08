@@ -109,6 +109,23 @@
     "deadlineToday": "Bugün son",
     "deadlineDays": "{{count}} gün kaldı"
   },
+  "expense": {
+    "title": "Gider Ekle",
+    "category": "Gider Kategorisi",
+    "bill": "Fatura",
+    "rent": "Barınma",
+    "transport": "Ulaşım",
+    "insurance": "Sigorta",
+    "subscription": "Abonelik",
+    "other": "Diğer",
+    "amount": "Miktar",
+    "dueDate": "Son Ödeme Tarihi",
+    "paid": "Ödendi",
+    "paidDate": "Ödeme Tarihi",
+    "save": "Kaydet",
+    "month": "Ay",
+    "year": "Yıl"
+  },
   "goalCategories": {
     "Emergency Fund": "Acil Durum Fonu",
     "Vacation": "Tatil",
@@ -166,6 +183,21 @@
     "pwa": "PWA Desteği",
     "supported": "Destekleniyor",
     "copyright": "© 2024 Finans Pusulası PWA"
+  },
+  "income": {
+    "title": "Gelir Ekle",
+    "type": "Gelir Türü",
+    "salary": "Maaş",
+    "freelance": "Freelance İş",
+    "investment": "Yatırım Geliri",
+    "other": "Diğer",
+    "amount": "Miktar",
+    "expectedDate": "Tahsil Tarihi",
+    "received": "Tahsil Edildi",
+    "receivedDate": "Tahsil Tarihi",
+    "save": "Kaydet",
+    "month": "Ay",
+    "year": "Yıl"
   },
   "common": {
     "cancel": "İptal",

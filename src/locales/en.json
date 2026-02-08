@@ -167,6 +167,21 @@
     "supported": "Supported",
     "copyright": "© 2024 Finance Tracker PWA"
   },
+  "income": {
+    "title": "Add Income",
+    "type": "Income Type",
+    "salary": "Salary",
+    "freelance": "Freelance",
+    "investment": "Investment",
+    "other": "Other",
+    "amount": "Amount",
+    "expectedDate": "Expected Date",
+    "received": "Received",
+    "receivedDate": "Received Date",
+    "save": "Save",
+    "month": "Month",
+    "year": "Year"
+  },
   "common": {
     "cancel": "Cancel",
     "delete": "Delete",

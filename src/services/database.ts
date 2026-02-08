@@ -1,60 +1,68 @@
 import Dexie, { Table } from 'dexie';
 
-export interface Transaction {
+export interface Income {
   id?: number;
-  type: 'income' | 'expense';
+  type: 'salary' | 'freelance' | 'investment' | 'other';
   amount: number;
-  description: string;
-  category: string;
-  date: Date;
-  frequency: 'once' | 'daily' | 'weekly' | 'monthly' | 'yearly';
+  expectedDate: string;
+  received: boolean;
+  receivedDate?: string;
+  month: number;
+  year: number;
+  createdAt: Date;
+}
+
+export interface Expense {
+  id?: number;
+  category: 'bill' | 'rent' | 'transport' | 'insurance' | 'subscription' | 'other';
+  amount: number;
+  dueDate: string;
+  paid: boolean;
+  paidDate?: string;
+  month: number;
+  year: number;
   createdAt: Date;
 }
 
 export interface Debt {
   id?: number;
-  lender: string;
-  borrower: string;
+  personName: string;
+  direction: 'borrow' | 'lend';
   amount: number;
-  description: string;
-  dueDate?: Date;
-  status: 'pending' | 'paid' | 'overdue';
-  isInstallment: boolean;
-  installmentCount: number;
-  paidDate?: Date;
-  paidNote?: string;
+  description?: string;
+  dueDate: string;
+  status: 'pending' | 'paid';
+  paidDate?: string;
+  note?: string;
+  isInstallment?: boolean;
+  installmentCount?: number;
   createdAt: Date;
 }
 
 export interface Goal {
   id?: number;
   name: string;
+  category: string;
   targetAmount: number;
   currentAmount: number;
-  category: string;
-  deadline?: Date;
+  deadline?: string;
+  icon?: string;
   createdAt: Date;
 }
 
-export interface Settings {
-  id?: number;
-  key: string;
-  value: string;
-}
-
 class FinanceDatabase extends Dexie {
-  transactions!: Table<Transaction>;
+  incomes!: Table<Income>;
+  expenses!: Table<Expense>;
   debts!: Table<Debt>;
   goals!: Table<Goal>;
-  settings!: Table<Settings>;
 
   constructor() {
     super('FinanceTrackerDB');
-    this.version(1).stores({
-      transactions: '++id, type, date, createdAt',
-      debts: '++id, status, dueDate, createdAt',
-      goals: '++id, category, createdAt',
-      settings: 'key'
+    this.version(3).stores({
+      incomes: '++id, type, received, month, year, createdAt',
+      expenses: '++id, category, paid, month, year, createdAt',
+      debts: '++id, personName, direction, status, dueDate, createdAt',
+      goals: '++id, name, category, deadline, createdAt'
     });
   }
 }
