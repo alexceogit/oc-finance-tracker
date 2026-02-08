@@ -15,6 +15,7 @@ export interface Income {
 export interface Expense {
   id?: number;
   category: 'bill' | 'rent' | 'transport' | 'insurance' | 'subscription' | 'other';
+  description?: string;
   amount: number;
   dueDate: string;
   paid: boolean;

@@ -247,7 +247,9 @@ export default function Dashboard() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{t(`expense.${expense.category}`)}</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      {expense.description || t(`expense.${expense.category}`)}
+                    </p>
                     <p className="text-xs text-gray-500">{expense.dueDate}</p>
                   </div>
                 </div>
@@ -291,7 +293,9 @@ export default function Dashboard() {
                     </svg>
                   </div>
                   <div>
-                    <p className="text-sm font-medium text-gray-900">{t(`expense.${expense.category}`)}</p>
+                    <p className="text-sm font-medium text-gray-900">
+                      {expense.description || t(`expense.${expense.category}`)}
+                    </p>
                     <p className="text-xs text-gray-500">{expense.paidDate || expense.dueDate}</p>
                   </div>
                 </div>

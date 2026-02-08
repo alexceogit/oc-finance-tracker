@@ -22,6 +22,7 @@ export default function ExpensePage() {
   
   const [formData, setFormData] = useState({
     category: '' as ExpenseCategory,
+    description: '',
     amount: '',
     dueDate: '',
     paid: false,
@@ -54,6 +55,7 @@ export default function ExpensePage() {
     
     const expense: Omit<Expense, 'id'> = {
       category: formData.category as ExpenseCategory,
+      description: formData.description,
       amount: parseFloat(formData.amount),
       dueDate: formData.dueDate,
       paid: formData.paid,
@@ -115,6 +117,20 @@ export default function ExpensePage() {
               {localStorage.getItem('currency') === 'USD' ? '$' : localStorage.getItem('currency') === 'GBP' ? '£' : '₺'}
             </span>
           </div>
+        </div>
+
+        {/* Description Input */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+            {t('transaction.description')}
+          </label>
+          <input
+            type="text"
+            value={formData.description}
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            className="input"
+            placeholder={t('common.placeholder.description')}
+          />
         </div>
 
         {/* Due Date */}
