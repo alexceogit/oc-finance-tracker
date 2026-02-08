@@ -490,67 +490,81 @@ export default function Debts() {
             ))}
           </div>
         )}
-      {/* Settle Debt Dialog */}
-      {settleDebt && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 animate-fade-in">
-          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 w-full max-w-sm animate-slide-up">
-            <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-              </svg>
-            </div>
-            <h3 className="text-lg font-bold text-gray-900 dark:text-white text-center mb-2">
-              {t('debts.settle')}
-            </h3>
-            <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-4">
-              {settleDebt.lender 
-                ? `${settleDebt.lender}'a ödeme yapıldı`
-                : `${settleDebt.borrower}'dan alacak tahsil edildi`}
-              <br />
-              <span className="font-semibold text-gray-900 dark:text-white">
-                {formatCurrency(settleDebt.amount)}
-              </span>
-            </p>
-            
-            <div className="space-y-4 mb-6">
-              <div className="form-group">
-                <label className="form-label">{t('transaction.date')}</label>
-                <input
-                  type="date"
-                  value={settleData.paidDate}
-                  onChange={(e) => setSettleData({ ...settleData, paidDate: e.target.value })}
-                  className="input"
-                />
-              </div>
-              <div className="form-group">
-                <label className="form-label">{t('transaction.description')}</label>
-                <input
-                  type="text"
-                  value={settleData.note}
-                  onChange={(e) => setSettleData({ ...settleData, note: e.target.value })}
-                  className="input"
-                  placeholder={t('common.placeholder.description')}
-                />
-              </div>
-            </div>
-
-            <div className="flex gap-3">
-              <button
-                onClick={() => setSettleDebt(null)}
-                className="flex-1 px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors"
-              >
-                {t('common.cancel')}
-              </button>
-              <button
-                onClick={confirmSettle}
-                className="flex-1 px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-medium hover:bg-emerald-600 transition-colors"
-              >
-                {t('debts.settle')}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+      </div>
     </div>
   );
 }
+
+// Settle Debt Dialog (rendered outside main return)
+function SettleDebtDialog({ debt, onClose, onConfirm }: { debt: Debt | null; onClose: () => void; onConfirm: () => void }) {
+  const { t } = useTranslation();
+  const [settleData, setSettleData] = useState({
+    note: '',
+    paidDate: new Date().toISOString().split('T')[0]
+  });
+
+  if (!debt) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 animate-fade-in">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 w-full max-w-sm animate-slide-up">
+        <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-6 h-6 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+        <h3 className="text-lg font-bold text-gray-900 dark:text-white text-center mb-2">
+          {t('debts.settle')}
+        </h3>
+        <p className="text-sm text-gray-500 dark:text-gray-400 text-center mb-4">
+          {debt.lender 
+            ? `${debt.lender}'a ödeme yapıldı`
+            : `${debt.borrower}'dan alacak tahsil edildi`}
+          <br />
+          <span className="font-semibold text-gray-900 dark:text-white">
+            {debt.amount}
+          </span>
+        </p>
+        
+        <div className="space-y-4 mb-6">
+          <div className="form-group">
+            <label className="form-label">{t('transaction.date')}</label>
+            <input
+              type="date"
+              value={settleData.paidDate}
+              onChange={(e) => setSettleData({ ...settleData, paidDate: e.target.value })}
+              className="input"
+            />
+          </div>
+          <div className="form-group">
+            <label className="form-label">{t('transaction.description')}</label>
+            <input
+              type="text"
+              value={settleData.note}
+              onChange={(e) => setSettleData({ ...settleData, note: e.target.value })}
+              className="input"
+              placeholder={t('common.placeholder.description')}
+            />
+          </div>
+        </div>
+
+        <div className="flex gap-3">
+          <button
+            onClick={onClose}
+            className="flex-1 px-4 py-2.5 rounded-xl bg-gray-100 dark:bg-slate-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-200 dark:hover:bg-slate-600 transition-colors"
+          >
+            {t('common.cancel')}
+          </button>
+          <button
+            onClick={onConfirm}
+            className="flex-1 px-4 py-2.5 rounded-xl bg-emerald-500 text-white font-medium hover:bg-emerald-600 transition-colors"
+          >
+            {t('debts.settle')}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Debts;
