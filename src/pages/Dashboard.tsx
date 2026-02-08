@@ -36,7 +36,13 @@ export default function Dashboard() {
   }
 
   const formatCurrency = (amount: number) => {
-    const currency = i18n.language === 'tr' ? '₺' : '$';
+    const savedCurrency = localStorage.getItem('currency') || 'TRY';
+    const currencySymbols: Record<string, string> = {
+      TRY: '₺',
+      USD: '$',
+      GBP: '£'
+    };
+    const currency = currencySymbols[savedCurrency] || '₺';
     return `${currency}${amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })}`;
   };
 

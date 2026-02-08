@@ -83,10 +83,18 @@
     "progress": "Progress",
     "deadline": "Target Date",
     "noGoals": "No savings goals yet",
+    "noGoalsDescription": "Start saving for something special by creating your first goal",
+    "addFirstGoal": "Add First Goal",
     "complete": "Complete",
     "completed": "Completed",
     "remaining": "Remaining",
-    "daysLeft": "days left"
+    "daysLeft": "days left",
+    "markComplete": "Mark as Complete",
+    "deleteConfirm": "Are you sure you want to delete this goal?",
+    "createdOn": "Created on {{date}}",
+    "deadlinePassed": "Deadline passed",
+    "deadlineToday": "Due today",
+    "deadlineDays": "{{count}} days left"
   },
   "settings": {
     "title": "Settings",

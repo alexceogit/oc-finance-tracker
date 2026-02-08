@@ -45,7 +45,13 @@ export default function Goals() {
   }
 
   const formatCurrency = (amount: number) => {
-    const currency = i18n.language === 'tr' ? '₺' : '$';
+    const savedCurrency = localStorage.getItem('currency') || 'TRY';
+    const currencySymbols: Record<string, string> = {
+      TRY: '₺',
+      USD: '$',
+      GBP: '£'
+    };
+    const currency = currencySymbols[savedCurrency] || '₺';
     return `${currency}${amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })}`;
   };
 
@@ -356,9 +362,10 @@ export default function Goals() {
                   {!isCompleted && (
                     <div className="flex gap-2 mb-3">
                       {[100, 500, 1000].map((amount) => {
-                        const label = i18n.language === 'tr' 
-                          ? `+₺${amount.toLocaleString()}`
-                          : `+$${amount.toLocaleString()}`;
+                        const savedCurrency = localStorage.getItem('currency') || 'TRY';
+                        const symbols: Record<string, string> = { TRY: '₺', USD: '$', GBP: '£' };
+                        const symbol = symbols[savedCurrency] || '₺';
+                        const label = `+${symbol}${amount.toLocaleString()}`;
                         return (
                           <button
                             key={amount}

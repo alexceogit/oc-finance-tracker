@@ -83,10 +83,18 @@
     "progress": "İlerleme",
     "deadline": "Hedef Tarihi",
     "noGoals": "Henüz tasarruf hedefi yok",
-    "complete": "Tamamlandı",
+    "noGoalsDescription": "İlk hedefinizi oluşturarak bir şeyler için biriktirmeye başlayın",
+    "addFirstGoal": "İlk Hedefi Ekle",
+    "complete": "Tamamla",
     "completed": "Tamamlandı",
     "remaining": "Kalan",
-    "daysLeft": "gün kaldı"
+    "daysLeft": "gün kaldı",
+    "markComplete": "Tamamlandı Olarak İşaretle",
+    "deleteConfirm": "Bu hedefi silmek istediğinizden emin misiniz?",
+    "createdOn": "{{date}} tarihinde oluşturuldu",
+    "deadlinePassed": "Vade geçti",
+    "deadlineToday": "Bugün son",
+    "deadlineDays": "{{count}} gün kaldı"
   },
   "settings": {
     "title": "Ayarlar",

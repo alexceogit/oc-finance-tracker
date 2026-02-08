@@ -25,7 +25,13 @@ export default function Debts() {
   }
 
   const formatCurrency = (amount: number) => {
-    const currency = i18n.language === 'tr' ? '₺' : '$';
+    const savedCurrency = localStorage.getItem('currency') || 'TRY';
+    const currencySymbols: Record<string, string> = {
+      TRY: '₺',
+      USD: '$',
+      GBP: '£'
+    };
+    const currency = currencySymbols[savedCurrency] || '₺';
     return `${currency}${amount.toLocaleString('de-DE', { minimumFractionDigits: 2 })}`;
   };
 
@@ -120,7 +126,7 @@ export default function Debts() {
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="btn-primary flex items-center gap-2"
+          className="btn btn-primary flex items-center gap-2"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -242,7 +248,13 @@ export default function Debts() {
             <div className="form-group">
               <label className="form-label">{t('transaction.amount')}</label>
               <div className="relative">
-                <span className="input-currency">{i18n.language === 'tr' ? '₺' : '$'}</span>
+                <span className="input-currency">
+                  {(() => {
+                    const savedCurrency = localStorage.getItem('currency') || 'TRY';
+                    const symbols: Record<string, string> = { TRY: '₺', USD: '$', GBP: '£' };
+                    return symbols[savedCurrency] || '₺';
+                  })()}
+                </span>
                 <input
                   type="number"
                   step="0.01"
@@ -278,10 +290,10 @@ export default function Debts() {
             </div>
 
             <div className="flex gap-3 pt-2">
-              <button type="submit" className="btn-primary flex-1">
+              <button type="submit" className="btn btn-primary flex-1">
                 {t('debts.saveDebt')}
               </button>
-              <button type="button" onClick={() => setShowForm(false)} className="btn-secondary">
+              <button type="button" onClick={() => setShowForm(false)} className="btn btn-secondary">
                 {t('common.cancel')}
               </button>
             </div>
