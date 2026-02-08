@@ -4,7 +4,8 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "addTransaction": "Add Transaction",
+    "income": "Income",
+    "expense": "Expense",
     "debts": "Debts",
     "goals": "Goals",
     "settings": "Settings"
@@ -17,7 +18,14 @@
     "upcomingPayments": "Upcoming Payments",
     "recentTransactions": "Recent Transactions",
     "noTransactions": "No transactions yet",
-    "emptyStateDescription": "Tap the + button below to add your first transaction"
+    "emptyStateDescription": "Tap the + button below to add your first transaction",
+    "netBalance": "Net Balance",
+    "thisMonth": "This Month",
+    "total": "Total",
+    "received": "Received",
+    "pending": "Pending",
+    "paid": "Paid",
+    "unpaid": "Unpaid"
   },
   "transaction": {
     "title": "Add Transaction",
@@ -36,6 +44,46 @@
     "yearly": "Yearly",
     "save": "Save Transaction",
     "success": "Transaction saved successfully"
+  },
+  "income": {
+    "title": "Add Income",
+    "editTitle": "Edit Income",
+    "type": "Income Type",
+    "salary": "Salary",
+    "freelance": "Freelance",
+    "investment": "Investment",
+    "other": "Other",
+    "amount": "Amount",
+    "expectedDate": "Expected Date",
+    "received": "Received",
+    "receivedDate": "Received Date",
+    "save": "Save Income",
+    "success": "Income saved successfully",
+    "deleteSuccess": "Income deleted successfully",
+    "month": "Month",
+    "year": "Year",
+    "deleteConfirm": "Are you sure you want to delete this income?"
+  },
+  "expense": {
+    "title": "Add Expense",
+    "editTitle": "Edit Expense",
+    "category": "Expense Category",
+    "bill": "Bill",
+    "rent": "Housing",
+    "transport": "Transportation",
+    "insurance": "Insurance",
+    "subscription": "Subscription",
+    "other": "Other",
+    "amount": "Amount",
+    "dueDate": "Due Date",
+    "paid": "Paid",
+    "paidDate": "Paid Date",
+    "save": "Save Expense",
+    "success": "Expense saved successfully",
+    "deleteSuccess": "Expense deleted successfully",
+    "month": "Month",
+    "year": "Year",
+    "deleteConfirm": "Are you sure you want to delete this expense?"
   },
   "debts": {
     "title": "Debts",
@@ -166,21 +214,6 @@
     "pwa": "PWA Support",
     "supported": "Supported",
     "copyright": "© 2024 Finance Tracker PWA"
-  },
-  "income": {
-    "title": "Add Income",
-    "type": "Income Type",
-    "salary": "Salary",
-    "freelance": "Freelance",
-    "investment": "Investment",
-    "other": "Other",
-    "amount": "Amount",
-    "expectedDate": "Expected Date",
-    "received": "Received",
-    "receivedDate": "Received Date",
-    "save": "Save",
-    "month": "Month",
-    "year": "Year"
   },
   "common": {
     "cancel": "Cancel",
