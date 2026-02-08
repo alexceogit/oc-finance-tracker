@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { db, Income, Expense } from '../services/database';
+import { db, Income, Expense, Debt } from '../services/database';
 
 export default function Dashboard() {
   const { t, i18n } = useTranslation();
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [expenses, setExpenses] = useState<Expense[]>([]);
+  const [debts, setDebts] = useState<Debt[]>([]);
   const [stats, setStats] = useState({
     totalIncome: 0,
     receivedIncome: 0,
@@ -14,7 +15,9 @@ export default function Dashboard() {
     totalExpense: 0,
     paidExpense: 0,
     unpaidExpense: 0,
-    netBalance: 0
+    netBalance: 0,
+    totalDebt: 0,
+    totalReceivable: 0
   });
 
   useEffect(() => {
@@ -36,6 +39,8 @@ export default function Dashboard() {
       .and(e => e.year === currentYear)
       .toArray();
 
+    const allDebts = await db.debts.orderBy('createdAt').reverse().toArray();
+
     const totalIncome = allIncomes.reduce((sum, i) => sum + i.amount, 0);
     const receivedIncome = allIncomes.filter(i => i.received).reduce((sum, i) => sum + i.amount, 0);
     const pendingIncome = totalIncome - receivedIncome;
@@ -44,8 +49,18 @@ export default function Dashboard() {
     const paidExpense = allExpenses.filter(e => e.paid).reduce((sum, e) => sum + e.amount, 0);
     const unpaidExpense = totalExpense - paidExpense;
 
+    // Calculate debt totals (only pending debts)
+    const owedToOthers = allDebts
+      .filter(d => d.status === 'pending' && d.direction === 'borrow')
+      .reduce((sum, d) => sum + d.amount, 0);
+    
+    const owedByOthers = allDebts
+      .filter(d => d.status === 'pending' && d.direction === 'lend')
+      .reduce((sum, d) => sum + d.amount, 0);
+
     setIncomes(allIncomes.slice(-5).reverse());
     setExpenses(allExpenses.slice(-5).reverse());
+    setDebts(allDebts.slice(-5).reverse());
     setStats({
       totalIncome,
       receivedIncome,
@@ -53,7 +68,9 @@ export default function Dashboard() {
       totalExpense,
       paidExpense,
       unpaidExpense,
-      netBalance: receivedIncome - paidExpense
+      netBalance: receivedIncome - paidExpense - owedToOthers + owedByOthers,
+      totalDebt: owedToOthers,
+      totalReceivable: owedByOthers
     });
   }
 
@@ -102,6 +119,32 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Debt Summary */}
+      {(stats.totalDebt > 0 || stats.totalReceivable > 0) && (
+        <div className="card animate-slide-up" style={{ animationDelay: '0.05s' }}>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="section-title mb-0">{t('debts.title')}</h3>
+            <Link to="/debts" className="text-sm text-indigo-600 hover:text-indigo-700">
+              {t('dashboard.viewAll')}
+            </Link>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            {stats.totalDebt > 0 && (
+              <div className="text-center p-3 bg-rose-50 rounded-xl">
+                <p className="text-xs text-gray-500 mb-1">{t('debts.owedToOthers')}</p>
+                <p className="text-lg font-bold text-rose-600">{formatCurrency(stats.totalDebt)}</p>
+              </div>
+            )}
+            {stats.totalReceivable > 0 && (
+              <div className="text-center p-3 bg-emerald-50 rounded-xl">
+                <p className="text-xs text-gray-500 mb-1">{t('debts.owedByOthers')}</p>
+                <p className="text-lg font-bold text-emerald-600">{formatCurrency(stats.totalReceivable)}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Monthly Summary */}
       <div className="card animate-slide-up" style={{ animationDelay: '0.1s' }}>
         <h3 className="section-title mb-4">{t('dashboard.thisMonth')}</h3>
@@ -118,7 +161,7 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Actions */}
-      <div className="grid grid-cols-2 gap-4 animate-slide-up" style={{ animationDelay: '0.2s' }}>
+      <div className="grid grid-cols-2 gap-4 animate-slide-up" style={{ animationDelay: '0.15s' }}>
         <Link to="/income" className="card flex items-center gap-3 hover:border-emerald-300 transition-all">
           <div className="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center">
             <svg className="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -146,7 +189,7 @@ export default function Dashboard() {
 
       {/* Pending Incomes */}
       {stats.pendingIncome > 0 && (
-        <div className="animate-slide-up" style={{ animationDelay: '0.25s' }}>
+        <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
           <div className="section-header">
             <h3 className="section-title">{t('dashboard.income')} - {t('dashboard.pending')}</h3>
           </div>
@@ -190,7 +233,7 @@ export default function Dashboard() {
 
       {/* Unpaid Expenses */}
       {stats.unpaidExpense > 0 && (
-        <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
+        <div className="animate-slide-up" style={{ animationDelay: '0.25s' }}>
           <div className="section-header">
             <h3 className="section-title">{t('dashboard.expenses')} - {t('dashboard.unpaid')}</h3>
           </div>
@@ -232,8 +275,35 @@ export default function Dashboard() {
         </div>
       )}
 
+      {/* Recent Paid Expenses (Payment History) */}
+      {expenses.filter(e => e.paid).length > 0 && (
+        <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
+          <div className="section-header">
+            <h3 className="section-title">{t('expense.paid')} {t('dashboard.expenses')}</h3>
+          </div>
+          <div className="space-y-2">
+            {expenses.filter(e => e.paid).slice(0, 5).map((expense) => (
+              <div key={expense.id} className="card flex items-center justify-between py-3 opacity-75">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="text-sm font-medium text-gray-900">{t(`expense.${expense.category}`)}</p>
+                    <p className="text-xs text-gray-500">{expense.paidDate || expense.dueDate}</p>
+                  </div>
+                </div>
+                <p className="text-sm font-semibold text-emerald-600">-{formatCurrency(expense.amount)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Empty State */}
-      {stats.totalIncome === 0 && stats.totalExpense === 0 && (
+      {stats.totalIncome === 0 && stats.totalExpense === 0 && debts.length === 0 && (
         <div className="empty-state animate-fade-in">
           <svg className="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
