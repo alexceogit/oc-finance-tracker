@@ -99,6 +99,24 @@ body {
     @apply border-slate-800 bg-slate-800;
   }
 
+  /* Settings Dark Mode */
+  .dark .setting-option {
+    background-color: rgba(30, 41, 59, 0.6);
+    border-color: rgba(71, 85, 105, 0.5);
+    color: #e2e8f0;
+  }
+
+  .dark .setting-option:hover {
+    background-color: rgba(51, 65, 85, 0.8);
+    border-color: rgba(99, 102, 241, 0.4);
+  }
+
+  .dark .setting-option-active {
+    background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+  }
+
   /* Direction Buttons */
   .direction-btn {
     @apply flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-gray-200 text-gray-600 font-medium
@@ -158,6 +176,21 @@ body {
 
   .tab-btn-active {
     @apply bg-white text-gray-900 shadow-sm;
+  }
+
+  /* Tab Navigation Dark Mode */
+  .dark .tab-navigation {
+    background-color: rgba(30, 41, 59, 0.6);
+  }
+
+  .dark .tab-btn {
+    color: #94a3b8;
+  }
+
+  .dark .tab-btn-active {
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.1) 100%);
+    color: #a5b4fc;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
 
   /* Badge Styles */
@@ -399,21 +432,28 @@ body {
   }
 }
 
-/* Dark Mode */
+/* Dark Mode - Enhanced Design */
 .dark {
   background-color: #0f172a;
-  color: #f8fafc;
+  color: #e2e8f0;
 }
 
 .dark body {
-  background-color: #0f172a;
-  color: #f8fafc;
+  background: linear-gradient(180deg, #0f172a 0%, #1e1b4b 100%);
+  color: #e2e8f0;
 }
 
 .dark .card {
-  background-color: #1e293b;
-  border-color: #334155;
-  color: #f8fafc;
+  background-color: rgba(30, 41, 59, 0.8);
+  backdrop-filter: blur(10px);
+  border-color: rgba(71, 85, 105, 0.5);
+  color: #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+}
+
+.dark .card:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  border-color: rgba(100, 116, 139, 0.6);
 }
 
 .dark .input {
@@ -431,11 +471,12 @@ body {
 }
 
 .dark .balance-card {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  background: linear-gradient(135deg, #312e81 0%, #1e1b4b 50%, #0f172a 100%);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
 .dark .balance-card-label {
-  color: #94a3b8;
+  color: #a5b4fc;
 }
 
 .dark .transaction-item {
@@ -490,17 +531,40 @@ body {
 .dark .text-gray-900,
 .dark .text-gray-700,
 .dark .text-gray-800 {
-  color: #f8fafc !important;
+  color: #f1f5f9 !important;
 }
 
 .dark .bg-gray-100 {
-  background-color: #334155 !important;
+  background-color: rgba(51, 65, 85, 0.6) !important;
 }
 
 .dark .bg-gray-50 {
-  background-color: #1e293b !important;
+  background-color: rgba(30, 41, 59, 0.6) !important;
 }
 
 .dark .bg-white {
-  background-color: #1e293b !important;
+  background-color: rgba(30, 41, 59, 0.6) !important;
+}
+
+/* Primary Button Dark Mode */
+.dark .btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+  box-shadow: 0 4px 14px 0 rgba(99, 102, 241, 0.4);
+}
+
+.dark .btn-primary:hover {
+  background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%);
+  box-shadow: 0 6px 20px 0 rgba(99, 102, 241, 0.5);
+}
+
+/* Secondary Button Dark Mode */
+.dark .btn-secondary {
+  background-color: rgba(51, 65, 85, 0.6);
+  border-color: rgba(71, 85, 105, 0.6);
+  color: #e2e8f0;
+}
+
+.dark .btn-secondary:hover {
+  background-color: rgba(71, 85, 105, 0.8);
+  border-color: rgba(99, 102, 241, 0.4);
 }
