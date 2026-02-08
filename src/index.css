@@ -26,6 +26,18 @@ body {
     @apply bg-white rounded-2xl shadow-sm border border-gray-100 p-5 transition-shadow duration-200 hover:shadow-md;
   }
 
+  .card-header {
+    @apply flex items-center justify-between mb-4;
+  }
+
+  .card-title {
+    @apply text-lg font-bold text-gray-900;
+  }
+
+  .card-close {
+    @apply p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors;
+  }
+
   .card-hover {
     @apply hover:shadow-lg hover:shadow-gray-200/50 cursor-pointer;
   }
@@ -53,8 +65,85 @@ body {
            focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:bg-white transition-all duration-200;
   }
 
+  .input-with-icon {
+    @apply pl-10;
+  }
+
+  .input-currency {
+    @apply absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-medium;
+  }
+
   .input-error {
     @apply border-rose-300 focus:ring-rose-500/20;
+  }
+
+  .form-group {
+    @apply space-y-1.5;
+  }
+
+  .form-label {
+    @apply block text-sm font-medium text-gray-700;
+  }
+
+  /* Direction Buttons */
+  .direction-btn {
+    @apply flex-1 flex items-center justify-center gap-2 px-4 py-3 rounded-xl border-2 border-gray-200 text-gray-600 font-medium
+           transition-all duration-200 hover:border-gray-300;
+  }
+
+  .direction-btn-active {
+    @apply border-slate-900 bg-slate-900 text-white;
+  }
+
+  /* Summary Cards */
+  .summary-card {
+    @apply bg-white rounded-2xl p-4 shadow-sm border border-gray-100;
+  }
+
+  .summary-card-danger {
+    @apply bg-gradient-to-br from-white to-red-50 border-red-100;
+  }
+
+  .summary-card-success {
+    @apply bg-gradient-to-br from-white to-emerald-50 border-emerald-100;
+  }
+
+  .summary-icon {
+    @apply w-11 h-11 rounded-xl flex items-center justify-center;
+  }
+
+  .summary-label {
+    @apply text-xs text-gray-500 font-medium;
+  }
+
+  .summary-value {
+    @apply text-xl font-bold mt-0.5;
+  }
+
+  .summary-footer {
+    @apply mt-3 pt-3 border-t border-gray-100;
+  }
+
+  .summary-footer-text {
+    @apply text-xs text-gray-400;
+  }
+
+  /* Net Balance Card */
+  .net-balance-card {
+    @apply bg-white rounded-2xl p-5 shadow-sm border border-gray-100;
+  }
+
+  /* Tab Navigation */
+  .tab-navigation {
+    @apply flex gap-2 p-1 bg-gray-100 rounded-xl;
+  }
+
+  .tab-btn {
+    @apply flex-1 px-4 py-2 rounded-lg text-sm font-medium text-gray-600 transition-all duration-200;
+  }
+
+  .tab-btn-active {
+    @apply bg-white text-gray-900 shadow-sm;
   }
 
   /* Badge Styles */
@@ -76,6 +165,81 @@ body {
 
   .badge-info {
     @apply bg-blue-50 text-blue-700;
+  }
+
+  /* Status Badge */
+  .status-badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium;
+  }
+
+  .status-paid {
+    @apply bg-emerald-100 text-emerald-700;
+  }
+
+  .status-pending {
+    @apply bg-amber-100 text-amber-700;
+  }
+
+  .status-overdue {
+    @apply bg-rose-100 text-rose-700;
+  }
+
+  /* Debt Card */
+  .debt-card {
+    @apply bg-white rounded-2xl border border-gray-100 overflow-hidden transition-all duration-200 hover:shadow-md;
+  }
+
+  .debt-card-header {
+    @apply flex items-center gap-3 p-4;
+  }
+
+  .debt-avatar {
+    @apply w-11 h-11 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 flex items-center justify-center
+           text-slate-700 font-bold text-lg;
+  }
+
+  .debt-info {
+    @apply flex-1 min-w-0;
+  }
+
+  .debt-person {
+    @apply font-semibold text-gray-900 truncate;
+  }
+
+  .debt-description {
+    @apply text-sm text-gray-500 truncate;
+  }
+
+  .debt-card-body {
+    @apply px-4 pb-3;
+  }
+
+  .debt-amount-section {
+    @apply flex items-center justify-between;
+  }
+
+  .debt-amount {
+    @apply text-xl font-bold;
+  }
+
+  .debt-due-date {
+    @apply flex items-center gap-1 text-sm text-gray-500;
+  }
+
+  .debt-card-actions {
+    @apply flex gap-2 p-3 bg-gray-50 border-t border-gray-100;
+  }
+
+  .debt-action-btn {
+    @apply flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200;
+  }
+
+  .debt-action-settle {
+    @apply bg-emerald-100 text-emerald-700 hover:bg-emerald-200;
+  }
+
+  .debt-action-delete {
+    @apply bg-rose-100 text-rose-700 hover:bg-rose-200;
   }
 
   /* Balance Cards */
