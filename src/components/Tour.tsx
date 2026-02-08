@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 
 interface TourStep {
@@ -44,35 +44,28 @@ export default function Tour({ onComplete }: TourProps) {
   const [currentStep, setCurrentStep] = useState(0);
   const [position, setPosition] = useState<{ top: number; left: number; bottom?: number; right?: number } | null>(null);
   const [isVisible, setIsVisible] = useState(true);
-  const previousActiveElement = useRef<HTMLElement | null>(null);
+  const stepRef = useRef(currentStep);
 
+  // Update ref when step changes
   useEffect(() => {
-    // Store current active element
-    previousActiveElement.current = document.activeElement as HTMLElement;
-    
-    // Prevent body scroll
-    document.body.style.overflow = 'hidden';
-    
-    updatePosition();
-    window.addEventListener('resize', updatePosition);
-    window.addEventListener('scroll', updatePosition);
-    
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('resize', updatePosition);
-      window.removeEventListener('scroll', updatePosition);
-      // Restore focus
-      previousActiveElement.current?.focus();
-    };
-  }, [currentStep, isVisible]);
+    stepRef.current = currentStep;
+  }, [currentStep]);
 
-  function updatePosition() {
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      // Ensure cleanup on unmount
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  const updatePosition = useCallback(() => {
     if (!isVisible) return;
     
-    const targetElement = document.querySelector(`[data-tour="${tourSteps[currentStep].target}"]`);
+    const targetElement = document.querySelector(`[data-tour="${tourSteps[stepRef.current].target}"]`);
     if (targetElement) {
       const rect = targetElement.getBoundingClientRect();
-      const step = tourSteps[currentStep];
+      const step = tourSteps[stepRef.current];
       
       let newPosition: { top: number; left: number; bottom?: number; right?: number };
       
@@ -89,18 +82,6 @@ export default function Tour({ onComplete }: TourProps) {
             left: Math.max(10, rect.left + (rect.width / 2) - 150)
           };
           break;
-        case 'left':
-          newPosition = {
-            top: Math.max(10, rect.top + (rect.height / 2) - 60),
-            right: window.innerWidth - rect.left + 10
-          };
-          break;
-        case 'right':
-          newPosition = {
-            top: Math.max(10, rect.top + (rect.height / 2) - 60),
-            left: rect.right + 10
-          };
-          break;
         default:
           newPosition = {
             top: rect.bottom + 10,
@@ -110,7 +91,18 @@ export default function Tour({ onComplete }: TourProps) {
       
       setPosition(newPosition);
     }
-  }
+  }, [isVisible]);
+
+  useEffect(() => {
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition);
+    
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition);
+    };
+  }, [updatePosition]);
 
   async function handleNext() {
     if (currentStep < tourSteps.length - 1) {
@@ -121,18 +113,26 @@ export default function Tour({ onComplete }: TourProps) {
   }
 
   async function handleComplete() {
+    // First hide the tour
     setIsVisible(false);
+    
+    // Restore body scroll
+    document.body.style.overflow = '';
+    
+    // Save to localStorage
     localStorage.setItem('tour_completed', 'true');
-    // Small delay to ensure smooth transition
+    
+    // Call onComplete after a small delay for animation
     setTimeout(() => {
       onComplete();
-    }, 300);
+    }, 100);
   }
 
   function handleSkip() {
     handleComplete();
   }
 
+  // If not visible, don't render anything
   if (!isVisible) {
     return null;
   }
@@ -144,7 +144,7 @@ export default function Tour({ onComplete }: TourProps) {
   return (
     <>
       {/* Overlay */}
-      <div className="fixed inset-0 bg-black/50 z-40 animate-fade-in" />
+      <div className="fixed inset-0 bg-black/50 z-40 animate-fade-in" onClick={handleSkip} />
       
       {/* Highlight element */}
       {hasTarget && targetElement && (
