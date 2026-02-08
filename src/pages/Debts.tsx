@@ -361,12 +361,14 @@ function Debts() {
                   ))}
                 </div>
                 <input
-                  type="number"
+                  type="text"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
                   min="2"
                   max="60"
                   value={formData.installmentCount > 12 ? formData.installmentCount : ''}
                   onChange={(e) => {
-                    const val = parseInt(e.target.value) || 2;
+                    const val = parseInt(e.target.value.replace(/\D/g, '')) || 2;
                     setFormData({ ...formData, installmentCount: Math.max(2, Math.min(60, val)) });
                   }}
                   className="input"

@@ -398,3 +398,109 @@ body {
     padding-bottom: env(safe-area-inset-bottom);
   }
 }
+
+/* Dark Mode */
+.dark {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+.dark body {
+  background-color: #0f172a;
+  color: #f8fafc;
+}
+
+.dark .card {
+  background-color: #1e293b;
+  border-color: #334155;
+  color: #f8fafc;
+}
+
+.dark .input {
+  background-color: #334155;
+  border-color: #475569;
+  color: #f8fafc;
+}
+
+.dark .input::placeholder {
+  color: #94a3b8;
+}
+
+.dark .section-title {
+  color: #f8fafc;
+}
+
+.dark .balance-card {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+}
+
+.dark .balance-card-label {
+  color: #94a3b8;
+}
+
+.dark .transaction-item {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+.dark .transaction-title {
+  color: #f8fafc;
+}
+
+.dark .transaction-subtitle {
+  color: #94a3b8;
+}
+
+.dark .debt-card {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+.dark .debt-person {
+  color: #f8fafc;
+}
+
+.dark .debt-description {
+  color: #94a3b8;
+}
+
+.dark .empty-state-title {
+  color: #f8fafc;
+}
+
+.dark .nav-item-active {
+  color: #f8fafc;
+}
+
+.dark .form-label {
+  color: #f8fafc;
+}
+
+.dark .summary-card {
+  background-color: #1e293b;
+  border-color: #334155;
+}
+
+.dark .text-gray-500,
+.dark .text-gray-400,
+.dark .text-gray-600 {
+  color: #94a3b8 !important;
+}
+
+.dark .text-gray-900,
+.dark .text-gray-700,
+.dark .text-gray-800 {
+  color: #f8fafc !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: #334155 !important;
+}
+
+.dark .bg-gray-50 {
+  background-color: #1e293b !important;
+}
+
+.dark .bg-white {
+  background-color: #1e293b !important;
+}
