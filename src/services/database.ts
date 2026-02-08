@@ -21,6 +21,8 @@ export interface Debt {
   status: 'pending' | 'paid' | 'overdue';
   isInstallment: boolean;
   installmentCount: number;
+  paidDate?: Date;
+  paidNote?: string;
   createdAt: Date;
 }
 
